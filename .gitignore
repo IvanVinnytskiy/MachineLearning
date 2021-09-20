@@ -17,6 +17,10 @@ Backup of *.doc*
 # Excel Backup File
 *.xlk
 
+#Word
+*.doc
+*.docx
+
 # PowerPoint temporary
 ~$*.ppt*
 
