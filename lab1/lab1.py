@@ -19,7 +19,7 @@ data1 = numpy.random.normal(1, 3, size=(1000, 2))
 print("First dataset:")
 # генеруємо перший кластер
 print(data1)
-data2 = numpy.random.normal(4, 3, size=(1000, 2))
+data2 = numpy.random.normal(9, 3, size=(1000, 2))
 print("Second dataset:")
 print(data2)
 # об'єднуємо два кластери в один набір даних

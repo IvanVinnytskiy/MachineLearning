@@ -2,18 +2,21 @@ from timeit import default_timer as timer
 import unittest
 import numpy as np
 
+# клас для методів множення
 class MultiplyMethods:
+	# метод множення матриці на матрицю
 	def multiply_matrix_matrix(matrix_A, matrix_B):
-		matrix_result = [[0 for y in range(len(matrix_B[0]))]
+		matrix_result = [[0 for y in range(len(matrix_B[0]))] # створення та початкова ініціалізація вихідної матриці
 				 for x in range(len(matrix_A))]
 				 
-		for i in range(len(matrix_A)):
-			for j in range(len(matrix_B[0])):
-				for k in range(len(matrix_B)):
-					matrix_result[i][j] += matrix_A[i][k] * matrix_B[k][j]
+		for i in range(len(matrix_A)): # цикл по рядках першої матриці
+			for j in range(len(matrix_B[0])): # цикл по стовпцях другої матриці
+				for k in range(len(matrix_B)): # цикл по рядках другої матриці
+					matrix_result[i][j] += matrix_A[i][k] * matrix_B[k][j] # обчислюємо добуток
 					
 		return 	matrix_result
 	
+	# метод множення матриці на вектор
 	def multiply_matrix_vector(matrix, vector):
 		vector_result = [0 for x in range(len(vector))]
 		
@@ -22,7 +25,8 @@ class MultiplyMethods:
 				vector_result[i] += matrix[i][j] * vector[j]
 				
 		return vector_result
-		
+	
+	# метод множення вектора на матрицю
 	def multiply_vector_matrix(vector, matrix):
 		vector_result = [0 for x in range(len(vector))]
 		
@@ -31,7 +35,8 @@ class MultiplyMethods:
 				vector_result[i] += vector[j] * matrix[j][i]
 		
 		return vector_result
-		
+	
+	# метод множення вектора на вектор
 	def multiply_vector_vector(vector_A, vector_B):
 		number_result = 0
 		
@@ -39,9 +44,11 @@ class MultiplyMethods:
 			number_result += vector_A[i] * vector_B[i]
 			
 		return number_result
-	
-class TestMultiplyMethods(unittest.TestCase):
 
+# клас для юніт тестів
+class TestMultiplyMethods(unittest.TestCase):
+	
+	# юніт тест - перевірка розмірів вхідних матриць - вірно
 	def test_matrix_size_valid(self):
 		matrix_A_test = [[1 for y in range(3)]
              for x in range(3)]
@@ -55,17 +62,20 @@ class TestMultiplyMethods(unittest.TestCase):
 		matrix_rows_B = len(matrix_B_test)
 	
 		self.assertEqual(matrix_columns_A, matrix_rows_B)
-		
+	
+	# юніт тест - перевірка розмірів вхідних матриць - невірно
 	def test_matrix_size_invalid(self):
-		matrix_A_test = [[1 for y in range(3)]
+		# матриці мають невірний розмір (кількість стовпців першої матриці не співпадає з кількістю рядків другої матриці)
+		matrix_A_test = [[1 for y in range(3)] # оголошення та ініціалізація першої вхідної матриці
              for x in range(3)]
 			 
-		matrix_B_test = [[1 for y in range(4)]
+		matrix_B_test = [[1 for y in range(4)] # оголошення та ініціалізація другої вхідної матриці
              for x in range(4)]
 		
-		with self.assertRaises(IndexError):
-			matrix_result_test = MultiplyMethods.multiply_matrix_matrix(matrix_A_test, matrix_B_test )
-
+		with self.assertRaises(IndexError): # перевірка чи повертається помилка IndexError
+			matrix_result_test = MultiplyMethods.multiply_matrix_matrix(matrix_A_test, matrix_B_test) # метод при виклику якого повинна бути помилка
+	
+	# юніт тест - перевірка розміру вихідної матриці
 	def test_matrix_size_output_valid(self):
 		matrix_A_test = [[1 for y in range(3)]
              for x in range(3)]
@@ -83,6 +93,7 @@ class TestMultiplyMethods(unittest.TestCase):
 		self.assertEqual(matrix_rows_exist, matrix_rows_should)
 		self.assertEqual(matrix_columns_exist, matrix_columns_should)
 		
+	# юніт тест - перевірка правильності множення матриці на матрицю
 	def test_matrix_matrix_multiply_valid(self):
 		matrix_A_test = [[1, 2, 3],
 						 [4, 5, 6],
@@ -99,7 +110,8 @@ class TestMultiplyMethods(unittest.TestCase):
 		matrix_result_exist_test = MultiplyMethods.multiply_matrix_matrix(matrix_A_test, matrix_B_test)
 	
 		self.assertEqual(matrix_result_exist_test, matrix_result_should_test)
-		
+	
+	# юніт тест - перевірка правильності множення матриці на вектор
 	def test_matrix_vector_multiply_valid(self):
 		matrix_test = [[1, 2, 3],
 					   [4, 5, 6],
@@ -112,7 +124,8 @@ class TestMultiplyMethods(unittest.TestCase):
 		vector_result_exist_test = MultiplyMethods.multiply_matrix_vector(matrix_test, vector_test)
 		
 		self.assertEqual(vector_result_exist_test, vector_result_should_test)
-		
+	
+	# юніт тест - перевірка правильності множення вектора на матрицю
 	def test_vector_matrix_multiply_valid(self):
 		vector_test = [1, 2, 3]
 		
@@ -125,7 +138,8 @@ class TestMultiplyMethods(unittest.TestCase):
 		vector_result_exist_test = MultiplyMethods.multiply_vector_matrix(vector_test, matrix_test)
 		
 		self.assertEqual(vector_result_exist_test, vector_result_should_test)
-		
+	
+	# юніт тест - перевірка правильності множення вектора на вектор
 	def test_vector_vector_multiply_valid(self):
 		vector_A_test = [1, 2, 3]
 			
@@ -138,7 +152,7 @@ class TestMultiplyMethods(unittest.TestCase):
 		self.assertEqual(vector_result_exist_test, vector_result_should_test)
 		
 	
-
+# дані для перевірки правильності обрахунків
 matrix_X = [[12, 7, 3],
 			[4 , 5, 6],
 			[7 , 8, 9]]
@@ -151,6 +165,8 @@ vector_X = [5, 6, 8]
 
 vector_Y = [1, 2, 3]
 
+
+# дані для вимірів часу
 #matrix_X = np.random.random((500, 500))
 
 #matrix_Y = np.random.random((500, 500))
@@ -159,6 +175,8 @@ vector_Y = [1, 2, 3]
 
 #vector_Y = np.random.random((500))
 
+
+# виведення початкових (вхідних) даних
 print('matrix X')
 for r in matrix_X:
    print(r)
@@ -173,16 +191,20 @@ print(vector_X)
 print('\nvector Y')
 print(vector_Y)
 
-print('\nmatrix x matrix')
-start = timer()				
-matrix_result = MultiplyMethods.multiply_matrix_matrix(matrix_X, matrix_Y)
-end = timer()
-time_all = end - start
 
-for r in matrix_result:
+# множення матриці на матрицю
+print('\nmatrix x matrix')
+start = timer() # початок відліку часу	
+matrix_result = MultiplyMethods.multiply_matrix_matrix(matrix_X, matrix_Y) # виклик методу множення матриці на матрицю
+end = timer() # кінець відліку часу
+time_all = end - start # обчислення часу виконання
+
+for r in matrix_result: # виведення результатів обрахунків
    print(r)
-print('time:', time_all)
-  
+print('time:', time_all) # виведення часу виконання
+
+
+# множення матриці на вектор
 print('\nmatrix x vector')
 start = timer()
 vector_result_1 = MultiplyMethods.multiply_matrix_vector(matrix_X, vector_X)	
@@ -192,6 +214,8 @@ time_all = end - start
 print(vector_result_1)
 print('time:', time_all)
 
+
+# множення вектора на матрицю
 print('\nvector x matrix')
 start = timer()
 vector_result_2 = MultiplyMethods.multiply_vector_matrix(vector_X, matrix_X)
@@ -201,6 +225,8 @@ time_all = end - start
 print(vector_result_2)
 print('time:', time_all)
 
+
+# множення вектора на вектор
 print('\nvector x vector')
 start = timer()
 number_result = MultiplyMethods.multiply_vector_vector(vector_X, vector_Y)
@@ -210,4 +236,4 @@ time_all = end - start
 print(number_result)
 print('time:', time_all)
 
-unittest.main()
+unittest.main() # виклик юніт тестів
