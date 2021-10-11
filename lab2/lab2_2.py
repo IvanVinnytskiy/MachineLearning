@@ -81,3 +81,13 @@ time_all = end - start
 
 print(number_result)
 print('time:', time_all)
+
+vector1 = np.random.random(3)
+print('vector1')
+print(vector1)
+matrix2 = np.random.random((3, 3))
+print('matrix2')
+print(matrix2)
+res = vector1.dot(matrix2)
+print('res')
+print(res)
