@@ -21,6 +21,9 @@ Backup of *.doc*
 *.doc
 *.docx
 
+#Pdf
+*.pdf
+
 # PowerPoint temporary
 ~$*.ppt*
 
