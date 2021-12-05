@@ -27,7 +27,7 @@ func_vectorize = np.vectorize(function)
 x_data = np.arange(-4, 4, 0.01)
 y_data = func_vectorize(x_data)
 
-gradient_points, gradient_minimum = grad(3, 0.1, 0.0001, function)
+gradient_points, gradient_minimum = grad(3, 0.05, 0.0001, function)
 
 print("Gradient descent points:")
 print(gradient_points)
@@ -40,7 +40,7 @@ der = derivative(function, 5, dx=1e-6)
 der_my = derivative_my(function, 5, 1e-6)
 eps = abs(der - der_my)
 print("\nDerivative: ", der)
-print("My derivate: ", der_my)
+print("My derivative: ", der_my)
 print("Eps: ", eps)
 
 plt.plot(x_data, y_data, label='Function')
