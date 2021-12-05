@@ -49,7 +49,7 @@ for pair in input:
 	
 k = -(weights[1] / weights[0]);
 b = -(weights[2] / weights[0]);
-x = np.linspace(-0.5, 1.5, 10)
+x = np.linspace(-0.25, 1.25, 10)
 y = k * x + b
 plt.plot(x, y)
 for pair in input:
@@ -74,7 +74,7 @@ for pair in input:
 	
 k = -(weights[1] / weights[0]);
 b = -(weights[2] / weights[0]);
-x = np.linspace(-0.5, 1.5, 10)
+x = np.linspace(-0.25, 1.25, 10)
 y = k * x + b
 plt.plot(x, y)
 for pair in input:
